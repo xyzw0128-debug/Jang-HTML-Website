@@ -129,7 +129,7 @@ img { vertical-align: middle; }
     width: 600px;      /* ★핵심: 600px로 고정 (숫자를 조절해보세요) */
     max-width: 100%;   /* 화면이 600px보다 작아지면 자동으로 줄어듦 (안전장치) */
     display: block;    /* 가운데 정렬을 위해 필요 */
-    margin: 0 auto;    /* 가운데 정렬 */
+    margin: 0 auto 5px;    /* 가운데 정렬 */
 }
 .sub2 {
     margin-top: 40px;
@@ -425,4 +425,5 @@ img { vertical-align: middle; }
         margin-bottom: 30px;
     }
 }
+
 
