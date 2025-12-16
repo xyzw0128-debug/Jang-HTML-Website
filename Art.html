@@ -9,9 +9,14 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
-            var width = $('[data-role="slider"]').attr('data-width')
-            var height = $('[data-role="slider"]').attr('data-height')
-            var count = $('[data-role = "slider"] div.item').length
+        var setWidth = parseInt($('[data-role="slider"]').attr('data-width')); // 설정된 너비 (800)
+        var containerWidth = $('.container').width(); // 현재 내 화면(컨테이너)의 너비
+        
+        // 화면이 800보다 작으면(모바일) 화면 너비를 쓰고, 크면 800을 씀
+        var width = (containerWidth < setWidth) ? containerWidth : setWidth;
+        
+        var height = $('[data-role="slider"]').attr('data-height');
+        var count = $('[data-role = "slider"] div.item').length;
 
 
             $('[data-role="slider"]').css({
@@ -159,5 +164,6 @@
     </div>
 </body>
 </html>
+
 
 
