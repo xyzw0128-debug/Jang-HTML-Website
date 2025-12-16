@@ -1,0 +1,399 @@
+/* style.css */
+
+/* ============================
+   1. 초기화 및 공통 스타일
+   ============================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 레이아웃 계산을 편하게 함 */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9; /* 아주 연한 회색 배경 */
+    color: #333;
+}
+
+a { text-decoration: none; color: inherit; }
+li { list-style: none; }
+img { vertical-align: middle; }
+
+/* 컨테이너 (중앙 정렬) */
+.container {
+    max-width: 800px; /* 너무 넓게 퍼지지 않도록 제한 */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================
+   2. 헤더 (네비게이션)
+   ============================ */
+#main-header {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+#main-header header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+}
+
+#main-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* 체크박스 핵 (모바일 메뉴) - 기존 유지하되 디자인 개선 */
+#main-header label {
+    display: none; /* PC에서는 숨김 */
+    cursor: pointer;
+    font-size: 20px;
+}
+#checkbox { display: none; }
+
+#main-header nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+#main-header nav li a {
+    color: #888;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+#main-header nav li.active a,
+#main-header nav li a:hover {
+    color: #00afa0; /* 포인트 컬러 */
+    font-weight: bold;
+}
+#main-header hr { display: none; } /* PC에서는 구분선 숨김 */
+
+
+/* ============================
+   3. 메인 배너 (Teal 배경)
+   ============================ */
+#main-content {
+    background: linear-gradient(135deg, #00afa0, #008f82); /* 그라데이션 효과 */
+    padding: 60px 0;
+    text-align: center;
+    color: white;
+    
+}
+
+#main-content h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+#main-content p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* ============================
+   4. 서브 콘텐츠 (본문)
+   ============================ */
+#sub-content {
+    padding: 40px 0;
+    background-color: #fff;
+    min-height: 400px;
+}
+
+/* 텍스트 가독성 개선 */
+#sub-content h1 { font-size: 24px; margin-bottom: 15px; color: #222; border-left: 5px solid #00afa0; padding-left: 10px; }
+#sub-content h2 { font-size: 20px; margin-top: 30px; margin-bottom: 10px; color: #444; }
+#sub-content h3 { font-size: 18px; margin-top: 20px; margin-bottom: 8px; color: #555; }
+#sub-content p { line-height: 1.6; color: #666; margin-bottom: 10px; }
+
+
+/* ============================
+   5. 페이지별 전용 스타일
+   ============================ */
+
+/* [Home] 프로필 스타일 */
+.sub1 img {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    
+    height: auto;
+    width: 600px;      /* ★핵심: 600px로 고정 (숫자를 조절해보세요) */
+    max-width: 100%;   /* 화면이 600px보다 작아지면 자동으로 줄어듦 (안전장치) */
+    display: block;    /* 가운데 정렬을 위해 필요 */
+    margin: 0 auto;    /* 가운데 정렬 */
+}
+.sub2 {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* [Book] 책 리스트 스타일 */
+.book-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+}
+#sub-content img {
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
+/* style.css 에 추가 */
+
+/* [Book] 책 카드 스타일 */
+.book-card {
+    display: flex;
+    flex-direction: column; /* 요소들을 세로로 배치 (핵심!) */
+    align-items: center;    /* 가로축 기준 가운데 정렬 */
+    text-align: center;     /* 텍스트 가운데 정렬 */
+    margin-bottom: 60px;    /* 다음 책과의 간격 */
+    padding: 20px;
+    background-color: white; /* 배경색 (선택사항) */
+    border-radius: 15px;     /* 모서리 둥글게 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* 살짝 그림자 */
+}
+
+.book-card img {
+    max-width: 200px;       /* 이미지 너무 크지 않게 제한 */
+    margin: 20px 0;         /* 이미지 위아래 여백 */
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+}
+
+.book-card p {
+    background-color: #f4f4f4; /* 텍스트 배경 회색 (보내주신 사진 느낌) */
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    width: 100%;            /* 텍스트 박스 너비 */
+    max-width: 600px;       /* 너무 넓어지지 않게 제한 */
+    word-break: keep-all;   /* 한글 단어 끊김 방지 */
+}
+
+/* [Music] 유튜브 반응형 */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+}
+
+/* [Habit] 리스트 스타일 */
+#sub-content p {
+    background-color: #f4f4f4;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block; /* 태그처럼 보이게 */
+    margin-right: 5px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* [Art] 슬라이더 */
+/* ============================
+   [Art] 슬라이더 전용 스타일 (심플 버전)
+   ============================ */
+
+/* 1. 슬라이더 메인 틀 */
+[data-role="slider"] {
+    margin: 0 auto;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+/* 2. 슬라이더 내부 아이템 */
+.item {
+    overflow: hidden;
+    text-align: center; /* 글자만 가운데 정렬 */
+}
+
+/* 이미지 스타일 */
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ============================
+   [Art] 슬라이더 캡션 스타일 (충돌 해결 버전)
+   ============================ */
+
+.item {
+    position: relative; 
+}
+
+/* 설명창 박스 */
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    box-sizing: border-box;
+    text-align: left;
+    z-index: 10; /* 다른 요소보다 위에 오도록 */
+}
+
+/* ★핵심: #sub-content를 앞에 붙여서 우선순위를 높임 */
+
+/* 1. 제목 충돌 해결 */
+#sub-content .slide-caption h3 {
+    color: #fff;        /* 기존 회색(#555) 덮어쓰기 -> 흰색 */
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;  /* 기존 마진 덮어쓰기 */
+    padding: 0;         /* 혹시 모를 패딩 제거 */
+    border: none;       /* 왼쪽 초록색 선 제거 */
+}
+
+/* 2. 본문(P태그) 충돌 해결 */
+#sub-content .slide-caption p {
+    color: #ddd;                  /* 기존 회색(#666) 덮어쓰기 -> 연한 회색 */
+    background-color: transparent;/* Habit용 회색 배경 제거 (투명하게) */
+    display: block;               /* Habit용 inline-block 해제 (줄바꿈 되게) */
+    padding: 0;                   /* Habit용 패딩 제거 */
+    margin: 0;                    /* 마진 초기화 */
+    border-radius: 0;             /* 둥근 모서리 제거 */
+    line-height: 1.4;             /* 줄간격 재설정 */
+}
+
+/* (선택사항) 마우스를 올렸을 때만 설명이 나오게 하려면 아래 주석을 해제하세요 */
+.slide-caption { opacity: 0; }
+.item:hover .slide-caption { opacity: 1; }
+
+
+
+
+/* 3. 버튼 컨트롤러 영역 */
+.slider-controls {
+    width: 400px;
+    margin: 0 auto 60px;
+    background: white;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-top: 1px solid #eee;
+}
+
+/* 4. 버튼 디자인 */
+#left-button, #right-button {
+    position: static;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #00afa0;
+    background: white;
+    color: #00afa0;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#left-button:hover, #right-button:hover {
+    background: #00afa0;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* ============================
+   6. 푸터
+   ============================ */
+#main-footer {
+    background-color: #323232;
+    color: #f1f1f1;
+    font-size: 12px;
+    text-align: center;
+    line-height: 30px;
+}
+
+
+
+/* ============================
+   7. 반응형 (모바일)
+   ============================ */
+@media (max-width: 600px) {
+    
+    /*  헤더 레이아웃: 메뉴 글자는 왼쪽, 삼각형은 오른쪽으로 */
+    #main-header header > div:first-child {
+        width: 100%;                 /* 가로 꽉 채우기 */
+        display: flex;               /* 한 줄로 배치 */
+        justify-content: space-between; /* 양 끝으로 벌리기 */
+        align-items: center;         /* 수직 가운데 정렬 */
+        flex-direction: row-reverse; /* ★핵심: (삼각형, 메뉴) 순서를 (메뉴, 삼각형)으로 뒤집음 */
+    }
+
+    /* 햄버거 버튼(삼각형) 보이기 */
+    #main-header label { 
+        display: block; 
+        cursor: pointer;
+        padding: 3px 20px;   /* 터치하기 편하게 여백 줌 */
+        border: 1px solid #222;
+        border-radius: 5px;
+
+    } 
+    
+    /* 메뉴 리스트 숨김/표시 처리 */
+    #main-header nav {
+        display: none; /* 기본 숨김 */
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: rgb(255, 255, 255);
+        border-bottom: 1px solid #ddd;
+        z-index: 100;
+        box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+    }
+    
+    /* 체크박스 체크되면 보이기 */
+    #checkbox {
+        display: none;
+    }
+    #checkbox + nav {
+        display: block;
+    }
+    #checkbox:checked + nav {
+        display: none;
+    }
+    #main-header nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+    #main-header nav li {
+        text-align: center;
+        padding: 12px 0; /* 터치하기 좋게 간격 넓힘 */
+        border-top: 1px solid #eee;
+    }
+    #main-header hr { display: none; }
+    
+    /* 책 리스트 세로 정렬 */
+    .book-item { flex-direction: column; } 
+    }
