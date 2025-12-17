@@ -396,8 +396,7 @@ img { vertical-align: middle; }
 
     /* 3. 모든 이미지 크기 제한 (충돌의 원인) */
     /* Book 페이지 등을 위해 필요하지만, 슬라이더까지 영향을 줌 */
-    img, 
-    #sub-content img,
+
     .book-card img {
         max-width: 100% !important; 
         height: auto !important;    
@@ -435,6 +434,7 @@ img { vertical-align: middle; }
         margin-bottom: 30px;
     }
 }
+
 
 
 
