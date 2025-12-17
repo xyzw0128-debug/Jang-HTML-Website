@@ -17,7 +17,11 @@ body {
 
 a { text-decoration: none; color: inherit; }
 li { list-style: none; }
-img { vertical-align: middle; }
+img { 
+    vertical-align: middle; 
+    max-width: 100%; /* 이미지가 부모 박스보다 커지는 것을 방지 */
+    height: auto;    /* 비율 유지 */
+}
 
 /* 컨테이너 */
 .container {
