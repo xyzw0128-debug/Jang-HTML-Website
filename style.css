@@ -417,23 +417,12 @@ img { vertical-align: middle; }
         object-fit: contain !important;
     }
 
-    /* 4. [Art] 슬라이더 모바일 대응 */
-    [data-role="slider"] {
-        width: 100% !important;
-        height: auto !important; 
-        aspect-ratio: 4/5; /* 슬라이더 전체 비율 */
-    }
-
-    .slider-container .item {
-        width: 100% !important;
-        height: 100% !important;
-    }
-    
     .slider-controls {
         width: 100% !important;
         margin-bottom: 30px;
     }
 }
+
 
 
 
