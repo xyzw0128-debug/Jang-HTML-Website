@@ -10,77 +10,98 @@
     <script>
         $(document).ready(function(){
             
+            // 1. 변수 세팅
             var $slider = $('[data-role="slider"]');
             var $container = $slider.find('.slider-container');
             var $items = $slider.find('.item');
-            var $imgs = $items.find('img');
             
-            var originalWidth = parseInt($slider.attr('data-width'));
+            var setWidth = parseInt($slider.attr('data-width')); // 설정된 800px
             var height = $slider.attr('data-height');
             var count = $items.length;
             
-            // ★ 1. 이 변수가 계속 변하면서 '현재 넓이'를 저장합니다.
-            var currentWidth = 0; 
+            var width = 0; // 이 변수는 화면 크기에 따라 계속 변할 예정
             var currentPage = 0;
             var sliderInterval;
     
-            function refreshLayout() {
-                var parentWidth = $slider.parent().width(); 
+            // 2. 슬라이더 크기를 계산하고 적용하는 함수 (핵심!)
+            function resizeSlider() {
+                var containerWidth = $('.container').width(); // 현재 화면(부모) 너비 구하기
                 
-                // ★ 2. 화면 크기가 바뀔 때마다 여기서 currentWidth 값을 최신으로 업데이트합니다.
-                currentWidth = (parentWidth < originalWidth) ? parentWidth : originalWidth;
+                // 모바일이면 화면 너비, PC면 800px 선택
+                width = (containerWidth < setWidth) ? containerWidth : setWidth;
     
-                $slider.css({ width: currentWidth, height: height, margin: '0 auto' });
-    
-                // ★ 3. (중요) 화면 크기가 변하는 순간, 현재 보고 있는 이미지 위치도 흐트러지지 않게 바로잡아줍니다.
-                $container.css({
-                    width: currentWidth * count,
+                // 크기 적용 (CSS)
+                $slider.css({
+                    width: width,
                     height: height,
-                    left: -currentPage * currentWidth // 여기서 위치 재조정!
+                    position: 'relative',
+                    overflow: 'hidden',
+                    margin: '0 auto' // 중앙 정렬
                 });
     
-                $items.css({ width: currentWidth, height: height, float: 'left', position: 'relative', backgroundColor: '#222' });
-                
-                $imgs.css({
-                    position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-                    maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain'
+                $container.css({
+                    width: count * width,
+                    height: height,
+                    position: 'absolute',
+                    overflow: 'hidden',
+                    left: -currentPage * width // 리사이즈 시 현재 페이지 위치 유지
+                });
+    
+                $items.css({
+                    width: width,
+                    height: height,
+                    float: 'left'
                 });
             }
     
+            // 3. 페이지 이동 함수
             var changePage = function(){
-                // ★ 4. 버튼을 누를 때, 위에서 업데이트된 최신 'currentWidth'를 사용하므로 오차가 없습니다.
-                $container.stop().animate({
-                    left: -currentPage * currentWidth 
+                $container.stop().animate({ // stop()을 넣어 애니메이션 중첩 방지
+                    left: -currentPage * width
                 }, 400);
             }
     
-            function startTimer(){
-                clearInterval(sliderInterval);
+            // 4. 자동 슬라이드 함수
+            function startAutoSlide(){
+                clearInterval(sliderInterval); // 중복 실행 방지
                 sliderInterval = setInterval(function(){
                     $('#right-button').click();
                 }, 5000);
             }
     
-            $('#left-button').on('click', function(){
-                currentPage--;
-                if(currentPage < 0) currentPage = count - 1;
+            function resetAutoSlide(){
+                clearInterval(sliderInterval);
+                startAutoSlide();
+            }
+    
+            // 5. 버튼 클릭 이벤트
+            $('#left-button').click(function(){
+                if(currentPage > 0){
+                    currentPage--;
+                } else {
+                    currentPage = count - 1; 
+                }
                 changePage();
-                startTimer();
+                resetAutoSlide();
             });
     
-            $('#right-button').on('click', function(){
-                currentPage++;
-                if(currentPage >= count) currentPage = 0;
+            $('#right-button').click(function(){
+                if(currentPage < count - 1){
+                    currentPage++;
+                } else {
+                    currentPage = 0; 
+                }
                 changePage();
-                startTimer();
+                resetAutoSlide();
             });
     
-            refreshLayout(); 
-            startTimer();
+            // 6. 실행 및 이벤트 등록
+            resizeSlider();       // 처음 켜졌을 때 크기 계산
+            startAutoSlide();     // 자동 슬라이드 시작
     
-            // ★ 5. 화면 크기가 변하면 refreshLayout을 실행해 2번 과정을 다시 수행합니다.
+            // ★★★ 여기가 가장 중요합니다 (화면 크기 변경 감지) ★★★
             $(window).resize(function(){
-                refreshLayout();
+                resizeSlider(); // 화면 크기가 변하면 슬라이더 크기도 다시 계산!
             });
         });
     </script>
