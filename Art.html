@@ -14,66 +14,86 @@
             var $slider = $('[data-role="slider"]');
             var $container = $slider.find('.slider-container');
             var $items = $slider.find('.item');
+            var $imgs = $items.find('img'); // ★ 이미지 태그도 변수에 담음
             
             var setWidth = parseInt($slider.attr('data-width')); // 설정된 800px
             var height = $slider.attr('data-height');
             var count = $items.length;
             
-            var width = 0; // 이 변수는 화면 크기에 따라 계속 변할 예정
+            var width = 0; // 현재 화면 크기에 맞춰 변하는 슬라이더 너비
             var currentPage = 0;
             var sliderInterval;
-    
-            // 2. 슬라이더 크기를 계산하고 적용하는 함수 (핵심!)
+
+            // 2. 슬라이더 크기 및 이미지 스타일 재설정 함수 (핵심!)
             function resizeSlider() {
-                var containerWidth = $('.container').width(); // 현재 화면(부모) 너비 구하기
+                var containerWidth = $('.container').width(); // 화면(부모) 너비
                 
-                // 모바일이면 화면 너비, PC면 800px 선택
+                // 모바일이면 화면 너비, PC면 800px (최대폭 제한)
                 width = (containerWidth < setWidth) ? containerWidth : setWidth;
-    
-                // 크기 적용 (CSS)
+
+                // 2-1. 슬라이더 틀 크기 적용
                 $slider.css({
                     width: width,
                     height: height,
                     position: 'relative',
                     overflow: 'hidden',
-                    margin: '0 auto' // 중앙 정렬
+                    margin: '0 auto', // 중앙 정렬
+                    backgroundColor: '#222' // 배경 검은색 (여백 처리)
                 });
-    
+
+                // 2-2. 기차(컨테이너) 길이 및 위치 조정
                 $container.css({
                     width: count * width,
                     height: height,
                     position: 'absolute',
                     overflow: 'hidden',
-                    left: -currentPage * width // 리사이즈 시 현재 페이지 위치 유지
+                    left: -currentPage * width // ★ 리사이즈 시 현재 페이지 위치 유지
                 });
-    
+
+                // 2-3. 각 슬라이드 칸 크기 조정
                 $items.css({
                     width: width,
                     height: height,
-                    float: 'left'
+                    float: 'left',
+                    position: 'relative'
+                });
+
+                // 2-4. ★★★ 이미지 강제 중앙 정렬 & 사이즈 최적화 ★★★
+                // (HTML에 style을 안 적어도 여기서 강제로 적용해줍니다)
+                $imgs.css({
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)', // 정중앙 배치
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    width: 'auto',     // 비율 유지
+                    height: 'auto',    // 비율 유지
+                    objectFit: 'contain' // 절대 잘리지 않음
                 });
             }
-    
+
             // 3. 페이지 이동 함수
             var changePage = function(){
-                $container.stop().animate({ // stop()을 넣어 애니메이션 중첩 방지
+                // 버튼 누를 때마다 최신 'width' 값을 사용하므로 오차 없음
+                $container.stop().animate({
                     left: -currentPage * width
                 }, 400);
             }
-    
+
             // 4. 자동 슬라이드 함수
             function startAutoSlide(){
-                clearInterval(sliderInterval); // 중복 실행 방지
+                clearInterval(sliderInterval);
                 sliderInterval = setInterval(function(){
                     $('#right-button').click();
                 }, 5000);
             }
-    
+
             function resetAutoSlide(){
                 clearInterval(sliderInterval);
                 startAutoSlide();
             }
-    
+
             // 5. 버튼 클릭 이벤트
             $('#left-button').click(function(){
                 if(currentPage > 0){
@@ -84,7 +104,7 @@
                 changePage();
                 resetAutoSlide();
             });
-    
+
             $('#right-button').click(function(){
                 if(currentPage < count - 1){
                     currentPage++;
@@ -94,14 +114,14 @@
                 changePage();
                 resetAutoSlide();
             });
-    
+
             // 6. 실행 및 이벤트 등록
-            resizeSlider();       // 처음 켜졌을 때 크기 계산
+            resizeSlider();       // 시작할 때 크기 계산
             startAutoSlide();     // 자동 슬라이드 시작
-    
-            // ★★★ 여기가 가장 중요합니다 (화면 크기 변경 감지) ★★★
+
+            // 화면 크기 변경 감지
             $(window).resize(function(){
-                resizeSlider(); // 화면 크기가 변하면 슬라이더 크기도 다시 계산!
+                resizeSlider(); 
             });
         });
     </script>
