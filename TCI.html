@@ -1,0 +1,689 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Jang's Website</title>
+    <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-header">
+        <header class="container">
+            <div>
+                <label for="checkbox">▼</label>
+                <h1>MENU</h1>
+            </div>
+            <input id="checkbox" checked="checked" type="checkbox">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <hr>
+                    <li><a href="Book.html">Book</a></li>
+                    <hr>
+                    <li><a href="Music.html">Music</a></li>
+                    <hr>
+                    <li><a href="Habit.html">Habit</a></li>
+                    <hr>
+                    <li><a href="Art.html">Art</a></li>
+                    <hr>
+                    <li class="active"><a href="TCI.html">TCI</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <div id="main-content">
+        <article class="container">
+            <h1>TCI 기질 및 성격 자기점검</h1>
+            <p>Temperament and Character Self-Check</p>
+        </article>
+    </div>
+
+    <div id="sub-content">
+        <article class="container tci">
+
+            <!-- 1. 검사 안내 -->
+            <section id="tci-intro">
+                <h1>검사 안내</h1>
+                <p>안녕하세요. 이 검사는 정신의학자 C. R. Cloninger의 <strong>심리생물학적 인성 모델</strong>을 바탕으로, 나의 타고난 <strong>기질</strong>과 살아오며 형성된 <strong>성격</strong>을 함께 살펴보는 자기이해 검사입니다.</p>
+
+                <div class="tci-box">
+                    <h2>TCI가 보는 7가지 차원</h2>
+                    <div class="tci-dims">
+                        <div>
+                            <h3>기질 (Temperament)</h3>
+                            <p>자극에 자동적으로 반응하는 타고난 성향으로, 비교적 잘 변하지 않습니다.</p>
+                            <ul>
+                                <li>자극추구 (NS)</li>
+                                <li>위험회피 (HA)</li>
+                                <li>사회적 민감성 (RD)</li>
+                                <li>인내력 (P)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>성격 (Character)</h3>
+                            <p>경험과 자기성찰을 통해 평생 성장하는 부분으로, 기질을 어떻게 다룰지 결정합니다.</p>
+                            <ul>
+                                <li>자율성 (SD)</li>
+                                <li>연대감 (C)</li>
+                                <li>자기초월 (ST)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tci-box">
+                    <h2>응답 방법</h2>
+                    <ul>
+                        <li>총 <strong>87문항</strong>이며, 10~15분 정도 걸립니다.</li>
+                        <li>정답은 없습니다. '되고 싶은 나'가 아니라 <strong>'평소의 나'</strong>에 가깝게 답해 주세요.</li>
+                        <li>한 문항에 너무 오래 고민하지 말고, 처음 떠오르는 느낌대로 고르세요.</li>
+                        <li>'보통이다'는 정말 판단하기 어려울 때만 사용해 주세요.</li>
+                        <li>응답은 이 브라우저에만 저장되며 어디에도 전송되지 않습니다. 중간에 나가도 이어서 할 수 있습니다.</li>
+                    </ul>
+                </div>
+
+                <div class="tci-box notice">
+                    <h2>꼭 읽어 주세요</h2>
+                    <p>이 문항들은 TCI 모델의 7개 차원과 하위척도를 바탕으로 <strong>새로 만든 자기점검용 문항</strong>입니다. 공식 TCI(Temperament and Character Inventory)의 문항이 아니며, 표준점수·백분위 같은 규준이 없어 공식 검사 결과와 직접 비교할 수 없습니다.</p>
+                    <p>결과는 진단이 아니라 나를 이해하기 위한 참고 자료입니다. 정확한 평가가 필요하다면 공식 TCI 검사(국내판: 마음사랑)를 심리 전문가를 통해 받아 보시길 권합니다.</p>
+                </div>
+
+                <div class="tci-buttons" id="tci-intro-buttons"></div>
+            </section>
+
+            <!-- 2. 문항 응답 -->
+            <section id="tci-test" hidden>
+                <div class="tci-progress">
+                    <div class="tci-progress-info">
+                        <span id="tci-page-info"></span>
+                        <span id="tci-count-info"></span>
+                    </div>
+                    <div class="tci-progress-bar"><span id="tci-progress-fill"></span></div>
+                </div>
+
+                <div id="tci-questions"></div>
+
+                <p class="tci-alert" id="tci-alert" hidden></p>
+                <div class="tci-buttons">
+                    <button type="button" class="tci-btn secondary" id="tci-prev">이전</button>
+                    <button type="button" class="tci-btn" id="tci-next">다음</button>
+                </div>
+            </section>
+
+            <!-- 3. 결과 -->
+            <section id="tci-result" hidden>
+                <h1>검사 결과</h1>
+                <p>각 척도의 응답을 0~100점으로 환산한 점수입니다. 다른 사람과 비교한 백분위가 아니라 <strong>나의 응답 경향</strong>을 보여 주는 점수이므로, 척도들 사이의 상대적인 높낮이를 중심으로 살펴보세요.</p>
+                <div id="tci-result-body"></div>
+                <div class="tci-buttons">
+                    <button type="button" class="tci-btn secondary" id="tci-print">결과 인쇄하기</button>
+                    <button type="button" class="tci-btn" id="tci-retake">다시 검사하기</button>
+                </div>
+            </section>
+
+        </article>
+    </div>
+    <div id="main-footer">
+        <footer class="container">
+            <div>©1991-2023 Example. All rights reserved.</div>
+        </footer>
+    </div>
+
+    <script>
+        // 1. 척도 및 문항 데이터
+        // 각 문항: [문항 내용, 역채점 여부]
+        var SCALES = [
+            {
+                key: 'NS', name: '자극추구', en: 'Novelty Seeking', group: 'temperament',
+                about: '새롭거나 보상이 기대되는 자극에 끌려 행동이 활성화되는 경향입니다. 탐색적 행동, 충동적 결정, 쉽게 지루해하는 성향과 관련됩니다.',
+                levels: {
+                    high: ['호기심이 많고 열정적이며, 새로운 경험에 빠르게 뛰어드는 편입니다. 분위기를 활기차게 만들고 변화에 잘 적응하지만, 쉽게 지루해하거나 충동적으로 결정해 일을 끝까지 이어가기 어려울 수 있습니다.',
+                           '중요한 결정이나 큰 지출 전에는 "하루 뒤에 다시 생각하기" 규칙을 만들어 보세요. 관심사에 작은 마감일을 정하면 열정을 끝까지 이어가는 데 도움이 됩니다.'],
+                    mid:  ['새로운 것에 대한 호기심과 익숙함을 지키려는 마음이 균형을 이루고 있습니다. 상황에 따라 탐색할 때와 신중해야 할 때를 비교적 잘 구분합니다.',
+                           '지금처럼 상황에 맞게 탐색과 신중함을 오가되, 요즘 어느 쪽으로 기울어 있는지 가끔 점검해 보세요.'],
+                    low:  ['신중하고 차분하며 익숙하고 검증된 방식을 선호합니다. 절제력과 꾸준함이 강점이지만, 변화에 적응하는 데 시간이 걸리거나 새로운 기회를 놓칠 수 있습니다.',
+                           '한 달에 한 번, 부담 없는 작은 새로움(새로운 길, 새로운 메뉴, 새로운 취미 체험)을 의도적으로 시도해 보세요.']
+                },
+                subs: [
+                    { name: '탐색적 흥분', items: [
+                        ['새로운 장소나 처음 해 보는 활동을 접하면 가슴이 설렌다.', false],
+                        ['익숙하고 검증된 방식만 고수하는 것이 마음 편하다.', true],
+                        ['남들이 잘 모르는 새로운 것을 찾아내는 일이 즐겁다.', false]
+                    ] },
+                    { name: '충동성', items: [
+                        ['깊이 따져 보기보다 그 순간의 느낌대로 결정할 때가 많다.', false],
+                        ['중요한 결정을 내리기 전에는 여러 가능성을 꼼꼼히 검토한다.', true],
+                        ['기분이 들뜨면 앞뒤 생각 없이 말이나 행동이 먼저 나온다.', false]
+                    ] },
+                    { name: '무절제', items: [
+                        ['계획에 없던 물건을 충동적으로 사는 일이 잦다.', false],
+                        ['돈을 쓰기보다 모아 두는 쪽이 훨씬 마음이 놓인다.', true],
+                        ['즐거움을 위해서라면 돈이나 시간을 아낌없이 쓰는 편이다.', false]
+                    ] },
+                    { name: '자유분방', items: [
+                        ['정해진 규칙이나 절차가 답답하게 느껴진다.', false],
+                        ['일을 할 때 순서와 체계를 정해 두고 그대로 따르는 편이다.', true],
+                        ['분위기만 맞으면 약속이나 일정을 쉽게 바꾸곤 한다.', false]
+                    ] }
+                ]
+            },
+            {
+                key: 'HA', name: '위험회피', en: 'Harm Avoidance', group: 'temperament',
+                about: '위험이나 처벌, 불확실성의 신호 앞에서 행동이 억제되는 경향입니다. 걱정, 긴장, 수줍음, 쉽게 지치는 성향과 관련됩니다.',
+                levels: {
+                    high: ['조심성이 많고 꼼꼼해서 위험을 미리 내다보고 대비하는 능력이 뛰어납니다. 다만 아직 일어나지 않은 일을 걱정하거나 긴장과 피로를 쉽게 느껴, 하고 싶은 일도 망설이게 될 수 있습니다.',
+                           '걱정이 많아질 때 종이에 적고 "내가 통제할 수 있는 것 / 없는 것"으로 나눠 보세요. 큰 도전보다 작은 단계부터 성공 경험을 쌓고, 충분한 휴식과 수면을 우선순위에 두는 것이 좋습니다.'],
+                    mid:  ['필요할 때는 조심하고, 해 볼 만한 일에는 용기를 내는 균형 잡힌 모습입니다. 상황에 따라 긴장 수준을 적절히 조절합니다.',
+                           '평소보다 걱정이나 피로가 늘었다면 스트레스가 쌓였다는 신호일 수 있으니 휴식을 챙겨 주세요.'],
+                    low:  ['낙천적이고 대담하며, 스트레스 상황에서도 비교적 침착하고 에너지가 넘칩니다. 다만 위험 신호를 가볍게 여겨 무리하거나, 걱정이 많은 사람의 마음을 이해하기 어려울 수 있습니다.',
+                           '중요한 일에는 간단한 체크리스트로 위험 요소를 점검하는 습관을 들여 보세요. 신중한 사람의 걱정도 유용한 정보가 될 수 있습니다.']
+                },
+                subs: [
+                    { name: '예기불안', items: [
+                        ['아직 일어나지 않은 일에 대해 걱정을 많이 한다.', false],
+                        ['앞으로 일이 잘 풀릴 것이라고 낙관하는 편이다.', true],
+                        ['작은 실수도 나중에 큰 문제가 될까 봐 신경이 쓰인다.', false]
+                    ] },
+                    { name: '불확실성에 대한 두려움', items: [
+                        ['결과를 예측할 수 없는 상황에서는 몹시 긴장된다.', false],
+                        ['낯선 상황에서도 비교적 침착하게 대처할 수 있다.', true],
+                        ['위험이 조금이라도 있다면 시도하지 않는 편이 낫다고 생각한다.', false]
+                    ] },
+                    { name: '낯선 사람에 대한 수줍음', items: [
+                        ['처음 만나는 사람 앞에서는 말수가 줄고 어색해진다.', false],
+                        ['모르는 사람에게도 먼저 말을 거는 것이 어렵지 않다.', true],
+                        ['사람이 많은 모임에 가면 구석에 있고 싶어진다.', false]
+                    ] },
+                    { name: '쉽게 지침', items: [
+                        ['다른 사람보다 쉽게 지치고, 회복하는 데 오래 걸린다.', false],
+                        ['바쁜 일정이 이어져도 활력을 잘 유지하는 편이다.', true],
+                        ['스트레스를 받으면 몸이 금방 무거워지고 기운이 빠진다.', false]
+                    ] }
+                ]
+            },
+            {
+                key: 'RD', name: '사회적 민감성', en: 'Reward Dependence', group: 'temperament',
+                about: '칭찬, 인정, 애정 같은 사회적 보상 신호에 민감하게 반응하고, 그런 관계를 유지하려는 경향입니다.',
+                levels: {
+                    high: ['따뜻하고 정이 많으며 다른 사람의 감정을 잘 알아차립니다. 관계에서 큰 힘을 얻는 반면, 거절이나 비판에 쉽게 상처받고 다른 사람의 평가에 마음이 흔들릴 수 있습니다.',
+                           '타인의 인정과 별개로 "내가 나를 인정하는 기준"을 적어 보세요. 부담스러운 부탁을 정중하게 거절하는 연습도 관계를 건강하게 지켜 줍니다.'],
+                    mid:  ['사람들과의 정서적 교류를 소중히 여기면서도, 필요할 때는 혼자서도 잘 지내는 균형을 갖추고 있습니다.',
+                           '가까운 관계에서 받는 지지와 혼자만의 시간, 두 가지를 모두 의식적으로 챙겨 보세요.'],
+                    low:  ['독립적이고 객관적이며, 다른 사람의 시선이나 분위기에 덜 흔들립니다. 다만 차갑거나 무심해 보일 수 있고, 정서적 교류가 부족해 관계가 멀어질 수 있습니다.',
+                           '고마움이나 관심을 말이나 짧은 메시지로 표현해 보세요. 작은 표현이 관계의 온도를 크게 바꿉니다.']
+                },
+                subs: [
+                    { name: '정서적 감수성', items: [
+                        ['영화나 이야기 속 인물의 감정에 쉽게 몰입해 눈물이 나기도 한다.', false],
+                        ['슬픈 장면을 보아도 감정이 크게 흔들리지 않는다.', true],
+                        ['다른 사람의 표정이나 말투 변화를 금방 알아차린다.', false]
+                    ] },
+                    { name: '정서적 개방성', items: [
+                        ['내 감정이나 속마음을 가까운 사람에게 솔직하게 털어놓는 편이다.', false],
+                        ['개인적인 이야기는 웬만하면 남에게 하지 않는다.', true],
+                        ['고마움이나 애정을 말로 표현하는 것이 자연스럽다.', false]
+                    ] },
+                    { name: '친밀감', items: [
+                        ['마음을 나눌 수 있는 친한 사람들과 자주 연락하며 지낸다.', false],
+                        ['혼자 지내는 시간이 사람들과 어울리는 시간보다 훨씬 편하다.', true],
+                        ['가까운 사람과의 관계는 내 삶에서 매우 중요한 부분이다.', false]
+                    ] },
+                    { name: '의존', items: [
+                        ['다른 사람에게 인정이나 칭찬을 받으면 큰 힘이 난다.', false],
+                        ['남들이 나를 어떻게 생각하든 크게 신경 쓰지 않는다.', true],
+                        ['결정을 내릴 때 주변 사람의 의견에 많이 기대는 편이다.', false]
+                    ] }
+                ]
+            },
+            {
+                key: 'P', name: '인내력', en: 'Persistence', group: 'temperament',
+                about: '즉각적인 보상이 없거나 피곤하고 좌절스러운 상황에서도 행동을 꾸준히 유지하는 경향입니다.',
+                levels: {
+                    high: ['근면하고 끈기 있으며, 목표를 이루기 위해 어려움을 참아 내는 힘이 강합니다. 다만 완벽주의 때문에 스스로를 몰아붙여 소진되거나, 상황이 바뀌었는데도 방식을 고집할 수 있습니다.',
+                           '"충분히 좋은" 기준을 미리 정하고, 휴식도 일정표에 넣어 지켜 보세요. 멈추는 것도 전략이라는 사실을 기억해 주세요.'],
+                    mid:  ['필요한 만큼 노력을 기울이면서도 적당한 때에 멈출 줄 압니다. 노력과 휴식 사이의 균형이 비교적 잘 잡혀 있습니다.',
+                           '정말 중요한 목표 한두 가지에는 조금 더 끈기를 발휘해 보는 것도 좋습니다.'],
+                    low:  ['유연하고 실용적이며, 무리하지 않고 상황에 맞춰 방향을 바꿀 줄 압니다. 다만 어려움 앞에서 쉽게 포기하거나, 가진 능력보다 성취가 낮게 나타날 수 있습니다.',
+                           '큰 목표를 아주 작은 단계로 쪼개고, 단계마다 스스로에게 작은 보상을 주세요. "딱 10분만 하기"처럼 시작의 문턱을 낮추는 방법이 효과적입니다.']
+                },
+                subs: [
+                    { name: '근면', items: [
+                        ['해야 할 일이 있으면 미루지 않고 바로 시작한다.', false],
+                        ['일을 하다가 조금만 지루해져도 손을 놓게 된다.', true],
+                        ['남들보다 더 많은 노력을 기울이는 것이 당연하다고 생각한다.', false]
+                    ] },
+                    { name: '끈기', items: [
+                        ['어려운 문제에 막혀도 해결될 때까지 붙들고 있는 편이다.', false],
+                        ['한두 번 실패하면 다른 일로 쉽게 관심을 돌린다.', true],
+                        ['피곤하거나 힘들어도 시작한 일은 끝까지 마무리한다.', false]
+                    ] },
+                    { name: '성취에 대한 야망', items: [
+                        ['현재 수준에 만족하기보다 더 높은 목표를 세우곤 한다.', false],
+                        ['적당히 해도 된다면 굳이 더 잘하려고 애쓰지 않는다.', true],
+                        ['당장은 힘들어도 나중의 큰 성취를 위해 기꺼이 참는다.', false]
+                    ] },
+                    { name: '완벽주의', items: [
+                        ['작은 부분까지 완벽하게 해내야 마음이 놓인다.', false],
+                        ['결과가 어느 정도 괜찮으면 세부 사항은 크게 신경 쓰지 않는다.', true],
+                        ['제출하기 전에 몇 번이고 다시 확인하고 고치는 편이다.', false]
+                    ] }
+                ]
+            },
+            {
+                key: 'SD', name: '자율성', en: 'Self-Directedness', group: 'character',
+                about: '자신을 책임감 있는 주체로 인식하고, 스스로 정한 목표와 가치에 맞게 행동을 조절하는 능력입니다. 성격 성숙도를 보여 주는 핵심 지표입니다.',
+                levels: {
+                    high: ['책임감과 목적의식이 분명하고, 자신의 장단점을 있는 그대로 받아들입니다. 스스로 선택하고 그 결과를 감당할 줄 알아 자존감이 안정적인 편입니다.',
+                           '지금의 자기주도성은 큰 강점입니다. 다만 혼자 모든 것을 해내려 하기보다, 도움을 요청하는 것도 성숙한 자율성의 일부임을 기억해 주세요.'],
+                    mid:  ['대체로 스스로 방향을 잡아 가지만, 상황에 따라 목표가 흐려지거나 자신감이 흔들릴 때가 있습니다.',
+                           '내가 중요하게 여기는 가치 3가지를 적어 보고, 이번 주에 그 가치와 연결된 작은 행동 하나를 실천해 보세요.'],
+                    low:  ['요즘 무엇을 원하는지 분명하지 않거나, 자신이 부족하다고 느끼거나, 상황이 내 뜻대로 되지 않는다고 느낄 때가 많을 수 있습니다. 이는 고정된 성향이라기보다 지금의 어려움이 반영된 것일 수 있습니다.',
+                           '성격은 경험과 노력으로 충분히 성장합니다. 하루에 하나, 이룰 수 있는 작은 목표를 세우고 해낸 것을 기록해 보세요. 자신을 비난하는 말 대신 친한 친구에게 하듯 다정하게 말해 주는 연습도 도움이 됩니다.']
+                },
+                subs: [
+                    { name: '책임감', items: [
+                        ['일이 잘못되었을 때 남 탓보다 내가 할 수 있었던 일을 먼저 돌아본다.', false],
+                        ['내가 처한 상황은 대부분 운이나 환경 탓이라고 느낀다.', true],
+                        ['내가 한 선택의 결과는 내가 감당해야 한다고 생각한다.', false]
+                    ] },
+                    { name: '목적의식', items: [
+                        ['내 삶에서 무엇이 중요한지 분명히 알고 있다.', false],
+                        ['내가 무엇을 원하는지, 어디로 가고 있는지 잘 모르겠다.', true],
+                        ['나에게는 꾸준히 추구하는 장기적인 목표가 있다.', false]
+                    ] },
+                    { name: '유능감', items: [
+                        ['어려운 문제가 생겨도 해결 방법을 찾아낼 수 있다고 믿는다.', false],
+                        ['새로운 문제가 생기면 무엇부터 해야 할지 막막해진다.', true],
+                        ['내 능력과 기술을 활용해 원하는 결과를 만들어 낼 수 있다.', false]
+                    ] },
+                    { name: '자기수용', items: [
+                        ['나의 장점과 단점을 모두 있는 그대로 받아들인다.', false],
+                        ['내 외모나 능력이 다른 사람보다 못하다는 생각에 자주 괴롭다.', true],
+                        ['부족한 점이 있어도 나는 충분히 괜찮은 사람이라고 느낀다.', false]
+                    ] },
+                    { name: '자기일치', items: [
+                        ['내 생각과 행동은 대체로 일치한다.', false],
+                        ['나쁜 습관을 고치고 싶지만 의지대로 잘 되지 않는다.', true],
+                        ['좋은 습관이 몸에 배어 있어 크게 애쓰지 않아도 바르게 행동하게 된다.', false]
+                    ] }
+                ]
+            },
+            {
+                key: 'C', name: '연대감', en: 'Cooperativeness', group: 'character',
+                about: '자신을 공동체의 일부로 인식하고, 다른 사람을 수용하고 공감하며 협력하는 능력입니다. 자율성과 함께 성격 성숙도를 보여 주는 핵심 지표입니다.',
+                levels: {
+                    high: ['관대하고 공감 능력이 뛰어나며, 다른 사람과 협력하는 것을 자연스럽게 여깁니다. 주변에서 신뢰받는 경우가 많지만, 나의 필요를 뒤로 미루다가 지칠 수 있습니다.',
+                           '다른 사람을 돕는 만큼 나 자신도 챙기는 "건강한 경계"를 세워 보세요. 거절해도 좋은 관계는 무너지지 않습니다.'],
+                    mid:  ['상황에 따라 타인을 배려하고 협력하지만, 나와 잘 맞지 않는 사람에게는 거리를 두기도 합니다.',
+                           '갈등이 생겼을 때 "저 사람은 왜 그렇게 행동했을까?"를 한 번 더 생각해 보면 이해의 폭이 넓어집니다.'],
+                    low:  ['독립적이고 비판적인 시각을 가지고 있으며, 다른 사람을 쉽게 신뢰하지 않거나 관계에서 손해를 보지 않으려는 마음이 클 수 있습니다. 과거의 상처나 실망이 영향을 주었을 수도 있습니다.',
+                           '상대의 입장에서 상황을 다시 바라보는 연습, 그리고 대가를 기대하지 않는 작은 친절을 실천해 보세요. 신뢰는 작은 경험이 쌓여 만들어집니다.']
+                },
+                subs: [
+                    { name: '타인 수용', items: [
+                        ['나와 생각이나 가치관이 다른 사람도 존중하려고 한다.', false],
+                        ['나와 맞지 않는 유형의 사람은 가까이하고 싶지 않다.', true],
+                        ['사람마다 각자의 사정이 있다고 생각하며 쉽게 판단하지 않는다.', false]
+                    ] },
+                    { name: '공감', items: [
+                        ['상대방의 입장이 되어 그 사람의 기분을 헤아려 보려고 한다.', false],
+                        ['다른 사람의 고민을 들으면 왜 그런 일로 힘들어하는지 이해가 잘 안 된다.', true],
+                        ['친구가 힘들어하면 내 일처럼 마음이 쓰인다.', false]
+                    ] },
+                    { name: '이타성', items: [
+                        ['도움이 필요한 사람을 보면 내가 할 수 있는 일을 찾아 돕는다.', false],
+                        ['나에게 이득이 없다면 남의 일에 굳이 나서지 않는다.', true],
+                        ['함께 일할 때 내 몫 이상을 해서라도 모두가 잘되길 바란다.', false]
+                    ] },
+                    { name: '관대함', items: [
+                        ['나에게 상처를 준 사람도 시간이 지나면 용서할 수 있다.', false],
+                        ['누군가에게 부당한 일을 당하면 반드시 되갚아 주고 싶다.', true],
+                        ['다른 사람의 실수에 너그러운 편이다.', false]
+                    ] },
+                    { name: '공평', items: [
+                        ['아무도 보지 않는 상황에서도 정직하게 행동하려고 한다.', false],
+                        ['원하는 것을 얻기 위해서라면 약간의 거짓말은 괜찮다고 생각한다.', true],
+                        ['나에게 손해가 되더라도 공정하게 대하는 것이 옳다고 믿는다.', false]
+                    ] }
+                ]
+            },
+            {
+                key: 'ST', name: '자기초월', en: 'Self-Transcendence', group: 'character',
+                about: '자신을 더 큰 세계나 자연의 일부로 느끼는 영적인 측면입니다. 몰입 경험, 만물과의 일체감, 영성에 대한 수용성과 관련됩니다.',
+                levels: {
+                    high: ['상상력과 직관이 풍부하고, 무언가에 깊이 몰입하거나 자연과 예술에서 깊은 감동을 느끼는 편입니다. 삶의 의미를 넓은 시야에서 바라보지만, 때로 현실적이고 논리적인 판단이 소홀해질 수 있습니다.',
+                           '풍부한 감수성과 직관을 창작이나 봉사로 표현해 보세요. 중요한 결정에서는 사실과 근거를 함께 점검하는 균형도 필요합니다.'],
+                    mid:  ['현실적인 판단을 중시하면서도, 때로는 몰입이나 감동, 삶의 의미에 대한 경험에 열려 있습니다.',
+                           '자연 속 산책이나 좋아하는 예술 활동처럼 "나를 잊고 빠져드는 시간"을 일상에 조금씩 늘려 보세요.'],
+                    low:  ['현실적이고 합리적이며 객관적인 근거를 중시합니다. 다만 통제할 수 없거나 불확실한 일을 겪을 때 의미를 찾거나 받아들이기 어려울 수 있습니다.',
+                           '모든 것을 설명하고 통제하려 하기보다, 때로는 "있는 그대로 두는" 연습을 해 보세요. 명상이나 자연 속 산책이 도움이 될 수 있습니다.']
+                },
+                subs: [
+                    { name: '창조적 자기망각', items: [
+                        ['좋아하는 일에 몰두하다 보면 시간 가는 줄 모를 때가 많다.', false],
+                        ['무언가에 깊이 빠져들어 나 자신을 잊는 경험은 거의 없다.', true],
+                        ['아름다운 음악이나 풍경에 마음을 빼앗겨 넋을 놓을 때가 있다.', false]
+                    ] },
+                    { name: '우주만물과의 일체감', items: [
+                        ['자연 속에 있으면 내가 더 큰 존재의 일부라는 느낌이 든다.', false],
+                        ['나는 세상과 분리된, 독립된 한 개인일 뿐이라고 느낀다.', true],
+                        ['사람과 자연, 세상은 모두 서로 연결되어 있다고 느낀다.', false]
+                    ] },
+                    { name: '영성 수용', items: [
+                        ['과학으로 다 설명할 수 없는 일이 세상에 존재한다고 믿는다.', false],
+                        ['눈에 보이지 않고 증명할 수 없는 것은 믿지 않는다.', true],
+                        ['삶에는 우연을 넘어선 어떤 의미나 흐름이 있다고 느낀다.', false]
+                    ] }
+                ]
+            }
+        ];
+
+        var CHOICES = ['전혀 아니다', '아닌 편이다', '보통이다', '그런 편이다', '매우 그렇다'];
+        var LEVEL_NAME = { high: '높음', mid: '보통', low: '낮음' };
+        var PAGE_SIZE = 10;
+        var STORAGE_KEY = 'tci-self-check-v1';
+
+        // 2. 문항 목록 만들기 (항상 같은 순서로 섞어서 같은 척도 문항이 몰리지 않게 함)
+        var items = [];
+        SCALES.forEach(function (scale, si) {
+            scale.subs.forEach(function (sub, bi) {
+                sub.items.forEach(function (item, ii) {
+                    items.push({ id: scale.key + bi + '-' + ii, scale: si, sub: bi, text: item[0], reverse: item[1] });
+                });
+            });
+        });
+
+        var seed = 460;
+        function seededRandom() {
+            seed = (seed * 9301 + 49297) % 233280;
+            return seed / 233280;
+        }
+        for (var i = items.length - 1; i > 0; i--) {
+            var j = Math.floor(seededRandom() * (i + 1));
+            var temp = items[i];
+            items[i] = items[j];
+            items[j] = temp;
+        }
+
+        var totalPages = Math.ceil(items.length / PAGE_SIZE);
+
+        // 3. 응답 저장/불러오기 (브라우저에만 저장)
+        var state = { answers: {}, page: 0, done: false };
+
+        function saveState() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+        }
+        function loadState() {
+            try {
+                var saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if (saved && saved.answers) state = saved;
+            } catch (e) {}
+        }
+        function answeredCount() {
+            return items.filter(function (item) { return state.answers[item.id]; }).length;
+        }
+
+        // 4. 화면 요소
+        var introEl = document.getElementById('tci-intro');
+        var testEl = document.getElementById('tci-test');
+        var resultEl = document.getElementById('tci-result');
+        var questionsEl = document.getElementById('tci-questions');
+        var alertEl = document.getElementById('tci-alert');
+        var prevBtn = document.getElementById('tci-prev');
+        var nextBtn = document.getElementById('tci-next');
+
+        function showSection(el) {
+            [introEl, testEl, resultEl].forEach(function (section) { section.hidden = section !== el; });
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 5. 안내 화면 버튼 (진행 상황에 따라 다르게 표시)
+        function renderIntroButtons() {
+            var count = answeredCount();
+            var box = document.getElementById('tci-intro-buttons');
+            if (state.done && count === items.length) {
+                box.innerHTML = '<button type="button" class="tci-btn secondary" data-action="restart">새로 검사하기</button>' +
+                                '<button type="button" class="tci-btn" data-action="result">지난 결과 보기</button>';
+            } else if (count > 0) {
+                box.innerHTML = '<button type="button" class="tci-btn secondary" data-action="restart">처음부터 시작</button>' +
+                                '<button type="button" class="tci-btn" data-action="continue">이어서 하기 (' + count + '/' + items.length + ')</button>';
+            } else {
+                box.innerHTML = '<button type="button" class="tci-btn" data-action="restart">검사 시작하기</button>';
+            }
+        }
+
+        document.getElementById('tci-intro-buttons').addEventListener('click', function (e) {
+            var action = e.target.getAttribute('data-action');
+            if (action === 'restart') {
+                state = { answers: {}, page: 0, done: false };
+                saveState();
+                startTest();
+            } else if (action === 'continue') {
+                startTest();
+            } else if (action === 'result') {
+                showResult();
+            }
+        });
+
+        // 6. 문항 화면
+        function startTest() {
+            renderPage();
+            showSection(testEl);
+        }
+
+        function renderPage() {
+            var start = state.page * PAGE_SIZE;
+            var html = '';
+            items.slice(start, start + PAGE_SIZE).forEach(function (item, k) {
+                var num = start + k + 1;
+                var value = state.answers[item.id];
+                html += '<div class="tci-q' + (value ? ' answered' : '') + '" data-id="' + item.id + '" role="radiogroup" aria-labelledby="tci-q' + num + '">';
+                html += '<p class="tci-q-text" id="tci-q' + num + '"><span class="tci-num">' + num + '</span>' + item.text + '</p>';
+                html += '<div class="tci-options">';
+                CHOICES.forEach(function (label, c) {
+                    var v = c + 1;
+                    html += '<label><input type="radio" name="' + item.id + '" value="' + v + '"' + (value === v ? ' checked' : '') + '>' +
+                            '<span class="tci-dot"></span><span class="tci-opt-text">' + label + '</span></label>';
+                });
+                html += '</div></div>';
+            });
+            questionsEl.innerHTML = html;
+
+            document.getElementById('tci-page-info').textContent = (state.page + 1) + ' / ' + totalPages + ' 페이지';
+            prevBtn.disabled = state.page === 0;
+            nextBtn.textContent = state.page === totalPages - 1 ? '결과 보기' : '다음';
+            alertEl.hidden = true;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var count = answeredCount();
+            document.getElementById('tci-count-info').textContent = count + ' / ' + items.length + ' 문항 응답';
+            document.getElementById('tci-progress-fill').style.width = (count / items.length * 100) + '%';
+        }
+
+        // 응답을 고르면 저장하고, 처음 답한 문항이면 다음 문항으로 부드럽게 이동
+        questionsEl.addEventListener('change', function (e) {
+            var box = e.target.closest('.tci-q');
+            var id = box.getAttribute('data-id');
+            var firstAnswer = !state.answers[id];
+
+            state.answers[id] = Number(e.target.value);
+            box.classList.add('answered');
+            box.classList.remove('missing');
+            if (!questionsEl.querySelector('.tci-q.missing')) alertEl.hidden = true;
+            saveState();
+            updateProgress();
+
+            if (firstAnswer) {
+                var next = box.nextElementSibling;
+                if (next && !next.classList.contains('answered')) {
+                    next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else if (!next) {
+                    nextBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        prevBtn.addEventListener('click', function () {
+            if (state.page > 0) {
+                state.page--;
+                saveState();
+                renderPage();
+                showSection(testEl);
+            }
+        });
+
+        nextBtn.addEventListener('click', function () {
+            var missing = questionsEl.querySelectorAll('.tci-q:not(.answered)');
+            if (missing.length > 0) {
+                missing.forEach(function (box) { box.classList.add('missing'); });
+                alertEl.textContent = '아직 응답하지 않은 문항이 ' + missing.length + '개 있습니다.';
+                alertEl.hidden = false;
+                missing[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            if (state.page < totalPages - 1) {
+                state.page++;
+                saveState();
+                renderPage();
+                showSection(testEl);
+            } else {
+                state.done = true;
+                saveState();
+                showResult();
+            }
+        });
+
+        // 7. 채점 (역채점 문항은 6 - 응답값, 평균을 0~100점으로 환산)
+        function scoreOf(list) {
+            var sum = 0;
+            list.forEach(function (item) {
+                var v = state.answers[item.id];
+                sum += item.reverse ? 6 - v : v;
+            });
+            return Math.round((sum / list.length - 1) / 4 * 100);
+        }
+
+        function levelOf(score) {
+            if (score > 60) return 'high';
+            if (score >= 40) return 'mid';
+            return 'low';
+        }
+
+        // 자극추구 × 위험회피 조합 해석
+        function temperamentPattern(ns, ha) {
+            if (levelOf(ns) === 'mid' && levelOf(ha) === 'mid') {
+                return ['균형형', '자극추구와 위험회피가 어느 한쪽으로 크게 치우치지 않았습니다. 새로운 것에 대한 관심과 신중함을 상황에 맞게 조절할 수 있는 유연한 기질입니다.'];
+            }
+            if (ns >= 50 && ha < 50) {
+                return ['도전·탐색형', '새로운 기회를 보면 망설임 없이 뛰어드는 추진력과 활력이 있습니다. 변화가 많은 환경에서 빛을 발하지만, 위험을 충분히 살피지 않고 결정할 수 있어 중요한 순간에는 한 박자 쉬어 가는 습관이 필요합니다.'];
+            }
+            if (ns >= 50 && ha >= 50) {
+                return ['접근-회피 갈등형', '새로운 것을 하고 싶은 마음(가속 페달)과 실패나 위험을 두려워하는 마음(브레이크)이 동시에 강하게 작동합니다. 그래서 하고 싶은 일 앞에서 오래 망설이거나, 결정한 뒤에도 마음이 편치 않아 스트레스를 많이 느낄 수 있습니다. 두 마음 모두 자연스러운 나의 일부임을 인정하고, 부담이 적은 작은 단계로 시도해 보세요.'];
+            }
+            if (ns < 50 && ha >= 50) {
+                return ['신중·안정형', '익숙하고 예측 가능한 환경에서 안정감을 느끼며, 꼼꼼하고 조심스럽게 일을 처리합니다. 실수가 적고 믿음직하지만, 변화나 새로운 도전 앞에서 불안을 크게 느낄 수 있습니다. 변화는 한 번에 크게보다 조금씩 익숙해지는 방식이 잘 맞습니다.'];
+            }
+            return ['여유·차분형', '쉽게 흥분하거나 불안해하지 않는 안정적이고 차분한 기질입니다. 위기 상황에서도 침착함을 유지하지만, 때로는 동기나 의욕이 잘 생기지 않아 무덤덤해 보일 수 있습니다. 스스로 의미를 느끼는 목표를 정해 두면 에너지를 끌어올리는 데 도움이 됩니다.'];
+        }
+
+        // 자율성 × 연대감 조합 해석 (성격 성숙도)
+        function characterPattern(sd, c) {
+            if (sd >= 50 && c >= 50) {
+                return '자율성과 연대감이 모두 잘 발달해 있습니다. 나 자신을 존중하면서 다른 사람과도 조화롭게 지낼 수 있는 안정된 성격 기반을 갖추고 있어, 어떤 기질이든 강점으로 발휘되기 쉽습니다.';
+            }
+            if (sd >= 50) {
+                return '스스로 목표를 세우고 이끌어 가는 힘이 강점입니다. 여기에 다른 사람의 입장을 헤아리고 협력하는 연대감이 더해지면, 혼자일 때보다 더 큰 성취와 만족을 얻을 수 있습니다.';
+            }
+            if (c >= 50) {
+                return '다른 사람을 배려하고 공감하는 따뜻함이 큰 강점입니다. 이제는 그 따뜻함을 나 자신에게도 돌려, 내가 원하는 것과 나의 목표를 존중하는 연습을 해 보세요. 자율성이 자라면 관계에서도 덜 지치게 됩니다.';
+            }
+            return '요즘 나 자신에 대해서도, 다른 사람과의 관계에서도 힘든 시기를 보내고 있을 수 있습니다. 성격은 고정된 것이 아니라 경험과 성찰을 통해 평생 성장합니다. 혼자 감당하기 버겁게 느껴진다면 상담 전문가와 이야기를 나눠 보는 것도 좋은 방법입니다.';
+        }
+
+        // 8. 결과 화면
+        function barRow(name, sub, score, group) {
+            return '<div class="tci-row">' +
+                       '<span class="tci-row-name">' + name + (sub ? ' <small>' + sub + '</small>' : '') + '</span>' +
+                       '<div class="tci-bar ' + group + '"><span style="width:' + score + '%"></span></div>' +
+                       '<span class="tci-row-score">' + score + '</span>' +
+                   '</div>';
+        }
+
+        function showResult() {
+            var results = SCALES.map(function (scale, si) {
+                var scaleItems = items.filter(function (item) { return item.scale === si; });
+                return {
+                    scale: scale,
+                    score: scoreOf(scaleItems),
+                    subs: scale.subs.map(function (sub, bi) {
+                        return { name: sub.name, score: scoreOf(scaleItems.filter(function (item) { return item.sub === bi; })) };
+                    })
+                };
+            });
+            var score = {};
+            results.forEach(function (r) { score[r.scale.key] = r.score; });
+
+            var html = '<div class="tci-box"><h2>한눈에 보기</h2>';
+            ['temperament', 'character'].forEach(function (group) {
+                html += '<h3>' + (group === 'temperament' ? '기질' : '성격') + '</h3>';
+                results.forEach(function (r) {
+                    if (r.scale.group === group) html += barRow(r.scale.name, r.scale.key, r.score, group);
+                });
+            });
+            html += '<p class="tci-legend">막대 뒤의 진한 회색 구간(40~60점)은 \'보통\' 범위입니다.</p></div>';
+
+            var pattern = temperamentPattern(score.NS, score.HA);
+            html += '<div class="tci-box"><h2>기질 조합: ' + pattern[0] + '</h2>' +
+                    '<p class="tci-legend">자극추구 ' + score.NS + '점 · 위험회피 ' + score.HA + '점</p>' +
+                    '<p>' + pattern[1] + '</p></div>';
+
+            html += '<div class="tci-box"><h2>성격 성숙도</h2>' +
+                    '<p class="tci-legend">자율성 ' + score.SD + '점 · 연대감 ' + score.C + '점</p>' +
+                    '<p>' + characterPattern(score.SD, score.C) + '</p></div>';
+
+            html += '<h1>척도별 해석</h1>';
+            results.forEach(function (r) {
+                var level = levelOf(r.score);
+                html += '<div class="tci-card">' +
+                            '<div class="tci-card-head">' +
+                                '<h3>' + r.scale.name + ' <small>' + r.scale.en + ' · ' + r.scale.key + '</small></h3>' +
+                                '<span class="tci-level ' + level + '">' + LEVEL_NAME[level] + ' · ' + r.score + '점</span>' +
+                            '</div>' +
+                            '<p class="tci-about">' + r.scale.about + '</p>' +
+                            '<p>' + r.scale.levels[level][0] + '</p>' +
+                            '<p class="tci-tip"><strong>상담사 TIP</strong> ' + r.scale.levels[level][1] + '</p>' +
+                            '<div class="tci-subs">';
+                r.subs.forEach(function (sub) { html += barRow(sub.name, '', sub.score, r.scale.group); });
+                html += '</div></div>';
+            });
+
+            html += '<div class="tci-box"><h2>상담사의 한마디</h2>' +
+                    '<p>기질에는 좋고 나쁨이 없습니다. 같은 기질이라도 성격(자율성·연대감·자기초월)이 얼마나 성숙했는지에 따라 강점이 되기도 하고 어려움이 되기도 합니다.</p>' +
+                    '<p>이 결과를 "나는 이런 사람이다"라는 꼬리표로 받아들이기보다, 나를 이해하고 성장 방향을 찾는 출발점으로 활용해 주세요. 결과가 마음에 걸리거나 요즘 많이 힘들다면, 가까운 상담센터에서 전문가와 함께 이야기를 나눠 보시길 권합니다.</p></div>';
+
+            document.getElementById('tci-result-body').innerHTML = html;
+            showSection(resultEl);
+        }
+
+        document.getElementById('tci-print').addEventListener('click', function () {
+            window.print();
+        });
+
+        document.getElementById('tci-retake').addEventListener('click', function () {
+            if (!confirm('응답을 모두 지우고 처음부터 다시 하시겠습니까?')) return;
+            state = { answers: {}, page: 0, done: false };
+            saveState();
+            renderIntroButtons();
+            showSection(introEl);
+        });
+
+        // 9. 시작
+        loadState();
+        if (state.page >= totalPages) state.page = 0;
+        renderIntroButtons();
+    </script>
+</body>
+
+</html>

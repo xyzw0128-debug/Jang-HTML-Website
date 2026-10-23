@@ -293,6 +293,191 @@ img {
 }
 
 /* ============================
+   [TCI] 기질 및 성격 검사
+   ============================ */
+.tci [hidden] { display: none !important; }
+
+/* #sub-content p 의 태그 스타일을 TCI 페이지에서는 일반 문단으로 되돌림 */
+#sub-content .tci p {
+    display: block;
+    background-color: transparent;
+    padding: 0;
+    margin: 0 0 10px;
+    border-radius: 0;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+    word-break: keep-all;
+}
+#sub-content .tci h2 { margin-top: 0; }
+
+.tci-box {
+    background-color: #f4fbfa;
+    border: 1px solid #d5efec;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.tci-box.notice { background-color: #fffaf0; border-color: #f3e2bf; }
+.tci-box ul { padding-left: 20px; }
+.tci-box li {
+    list-style: disc;
+    line-height: 1.7;
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 4px;
+    word-break: keep-all;
+}
+
+.tci-dims { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tci-dims > div { background-color: #fff; border-radius: 10px; padding: 14px 16px; }
+#sub-content .tci-dims h3 { margin: 0 0 8px; font-size: 16px; }
+
+/* 버튼 */
+.tci-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 24px 0;
+}
+.tci-btn {
+    min-width: 120px;
+    padding: 12px 24px;
+    border: 2px solid #00afa0;
+    border-radius: 8px;
+    background: #00afa0;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.tci-btn:hover { background: #008f82; border-color: #008f82; }
+.tci-btn.secondary { background: white; color: #00afa0; }
+.tci-btn.secondary:hover { background: #f4fbfa; }
+.tci-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* 진행률 */
+.tci-progress {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
+    padding: 12px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+.tci-progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #666;
+}
+.tci-progress-bar { height: 8px; border-radius: 4px; background-color: #eee; overflow: hidden; }
+.tci-progress-bar span { display: block; width: 0; height: 100%; background-color: #00afa0; transition: width 0.3s; }
+
+/* 문항 */
+.tci-q {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 18px 16px;
+    margin-bottom: 14px;
+    scroll-margin-top: 80px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.tci-q.answered { border-color: #bfe9e4; background-color: #fbfefe; }
+.tci-q.missing { border-color: #e5484d; background-color: #fff6f6; }
+#sub-content .tci .tci-q-text { margin-bottom: 14px; font-size: 16px; color: #333; }
+.tci-num { display: inline-block; min-width: 28px; margin-right: 6px; color: #00afa0; font-weight: bold; }
+
+.tci-options { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.tci-options label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.tci-options label:hover { background-color: #f4fbfa; }
+.tci-options input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.tci-dot {
+    width: 26px;
+    height: 26px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: all 0.2s;
+}
+.tci-options input:checked + .tci-dot { border-color: #00afa0; background-color: #00afa0; box-shadow: inset 0 0 0 4px #fff; }
+.tci-options input:focus-visible + .tci-dot { outline: 3px solid rgba(0, 175, 160, 0.35); outline-offset: 2px; }
+.tci-opt-text { font-size: 12px; line-height: 1.3; color: #777; text-align: center; word-break: keep-all; }
+.tci-options input:checked ~ .tci-opt-text { color: #00897b; font-weight: bold; }
+#sub-content .tci .tci-alert { color: #e5484d; font-size: 14px; font-weight: bold; text-align: center; }
+
+/* 결과 */
+.tci-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 40px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.tci-row-name { color: #333; font-weight: bold; }
+.tci-row-name small { margin-left: 4px; color: #999; font-weight: normal; }
+.tci-row-score { color: #333; font-weight: bold; text-align: right; }
+.tci-bar {
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: linear-gradient(to right, #eee 40%, #dcdcdc 40%, #dcdcdc 60%, #eee 60%);
+}
+.tci-bar span { display: block; height: 100%; border-radius: 6px; background-color: #00afa0; }
+.tci-bar.character span { background-color: #5b6ee1; }
+#sub-content .tci .tci-legend { font-size: 13px; color: #888; }
+
+.tci-card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+.tci-card-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+#sub-content .tci-card h3 { margin: 0; font-size: 18px; }
+.tci-card h3 small { margin-left: 6px; font-size: 13px; color: #999; font-weight: normal; }
+.tci-level { padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: bold; white-space: nowrap; }
+.tci-level.high { background-color: #e6f7f5; color: #00897b; }
+.tci-level.mid { background-color: #f1f1f1; color: #666; }
+.tci-level.low { background-color: #fff3e0; color: #c56a12; }
+#sub-content .tci .tci-about { font-size: 14px; color: #888; }
+#sub-content .tci .tci-tip { padding: 12px 14px; border-radius: 8px; background-color: #f4fbfa; font-size: 14px; }
+.tci-tip strong { margin-right: 4px; color: #00897b; }
+.tci-subs { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #e5e5e5; }
+.tci-subs .tci-row { grid-template-columns: 150px 1fr 36px; margin-bottom: 6px; font-size: 13px; }
+.tci-subs .tci-row-name { color: #666; font-weight: normal; }
+.tci-subs .tci-bar { height: 8px; }
+
+/* 인쇄 */
+@media print {
+    #main-header, #main-footer, .tci-buttons { display: none; }
+    .tci-card, .tci-box { break-inside: avoid; box-shadow: none; }
+    .tci-bar, .tci-bar span, .tci-level { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ============================
    6. 푸터
    ============================ */
 #main-footer {
@@ -390,6 +575,14 @@ img {
         width: 100% !important;
         margin-bottom: 30px;
     }
+
+    /* 5. TCI 검사 */
+    .tci-dims { grid-template-columns: 1fr; }
+    .tci-q { padding: 16px 10px; }
+    .tci-options { gap: 2px; }
+    .tci-opt-text { font-size: 11px; }
+    .tci-row,
+    .tci-subs .tci-row { grid-template-columns: 96px 1fr 32px; gap: 8px; }
 }
 
 
