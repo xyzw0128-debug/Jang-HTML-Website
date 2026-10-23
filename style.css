@@ -357,6 +357,7 @@ img {
 .tci-btn.secondary { background: white; color: #00afa0; }
 .tci-btn.secondary:hover { background: #f4fbfa; }
 .tci-btn:disabled { opacity: 0.4; cursor: default; }
+.tci-btn.confirm { background: #e5484d; border-color: #e5484d; color: white; }
 
 /* 진행률 */
 .tci-progress {
